@@ -187,7 +187,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            pip install --user ansible
+            apk add --update ansible 
       - run:
           name: configure server
           command: |
