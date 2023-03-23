@@ -4,5 +4,6 @@
   hosts: all
   user: ubuntu
   become: true
+  host_key_checking: False
   become_method: sudo
   become_user: root
