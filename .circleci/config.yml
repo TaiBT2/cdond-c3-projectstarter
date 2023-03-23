@@ -160,7 +160,7 @@ jobs:
           command: |
             aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
-            --output text >> inventory
+            --output text >> inventory.txt
       - run:
           name: Install tar utility
           command: |
@@ -173,20 +173,25 @@ jobs:
   configure-infrastructure:
     docker:
       # Docker image here that supports Ansible
-      - image: amazon/aws-cli
+      - image: python:3.7-alpine3.11
     steps:
       # Checkout code from git
       # Add ssh keys with fingerprint
       # attach workspace
       - checkout
+      - add_ssh_keys:
+          fingerprints: ["95:ba:e4:9a:98:a1:ad:fd:03:b3:fb:b1:5c:18:9f:04"]
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: ~/project/.circleci/ansible/inventory.txt
       - run:
-          name: Create Cloudformation stack
+          name: install dependencies
           command: |
-            aws cloudformation deploy \
-              --template-file template.yml \
-              --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
-              --region us-east-1
-      - destroy_environment
+            pip install --user ansible
+      - run:
+          name: configure server
+          command: |
+            ansible-playbook -i inventory.txt main.yml
       # Here's where you will add some code to rollback on failure      
 
 #   run-migrations:
