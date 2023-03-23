@@ -160,7 +160,7 @@ jobs:
           command: |
             aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
-            --output text >> inventory.txt
+            --output text >> project/.circleci/ansible/inventory.txt
       - run:
           name: Install tar utility
           command: |
@@ -168,7 +168,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - inventory.txt
+            - project/.circleci/ansible/inventory.txt
       # Here's where you will add some code to rollback on failure      
   configure-infrastructure:
     docker:
