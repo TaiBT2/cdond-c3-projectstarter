@@ -200,12 +200,14 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
+      - restore_cache:
+          keys: [backend-build]
       - run:
           name: Back-end build
           command: |
             cd backend
             npm install
-            npm run migrations > migrations_dump.txt
+            npm run migrate up > migrations_dump.txt
       #     name: Send migration results to memstash
       #     command: |
       #       if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
