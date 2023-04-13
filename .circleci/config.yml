@@ -207,7 +207,7 @@ jobs:
           command: |
             cd backend
             npm install
-            npm run migrate:up > migrations_dump.txt
+            npm run migrations  > migrations_dump.txt
       #     name: Send migration results to memstash
       #     command: |
       #       if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
