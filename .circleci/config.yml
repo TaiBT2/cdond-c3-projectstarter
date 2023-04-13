@@ -222,7 +222,6 @@ jobs:
 
   deploy-frontend:
     docker:
-      - image: circleci/node:13.8.0
       - image: amazon/aws-cli
     steps:
       - checkout
@@ -234,7 +233,7 @@ jobs:
           name: Install dependencies
           command: |
             yum install -y tar gzip
-            npm install
+            yum install nodejs npm --enablerepo=epel
       - run:
           name: Get backend url
           command: |
