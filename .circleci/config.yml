@@ -223,11 +223,6 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
-      - add_ssh_keys:
-          fingerprints: ["29:30:6f:29:ab:b7:64:88:3a:a4:42:68:d0:e9:03:b8"]
-      - attach_workspace:
-          # Must be absolute path or relative path from working_directory
-          at: ~/
       - run:
           name: Install dependencies
           command: |
