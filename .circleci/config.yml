@@ -232,8 +232,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            yum install -y tar gzip
-            yum install nodejs npm --enablerepo=epel
+            yum install -y tar gzip nodejs npm
       - run:
           name: Get backend url
           command: |
