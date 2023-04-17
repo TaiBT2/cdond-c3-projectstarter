@@ -1,6 +1,29 @@
 version: 2.1
-
+orbs:
+  slack: circleci/slack@4.1
 commands:
+  slack-notify: 
+    description: notify for dev side when have issues
+    steps:
+      - slack/notify:
+            channel: CircleCI
+            event: fail
+            custom: |
+              {
+                "blocks": [
+                  {
+                    "type": "section",
+                    "fields": [
+                      {
+                        "type": "plain_text",
+                        "text": "*This is a text notification*",
+                        "emoji": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            event: always
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     # parameters:
@@ -79,6 +102,7 @@ jobs:
             cd frontend
             npm install
             npm run test
+      - slack-notify
       # - save_cache:
       #     paths: [frontend/node_modules]
       #     key: frontend-build
@@ -97,6 +121,7 @@ jobs:
             cd backend
             npm install
             npm run test
+      - slack-notify
   scan-frontend:
     docker:
       - image: circleci/node:13.8.0
@@ -111,6 +136,7 @@ jobs:
             npm install
             npm audit fix --audit-level=critical --force
             npm audit --audit-level=critical
+      - slack-notify
       # - save_cache:
       #     paths: [frontend/node_modules]
       #     key: frontend-build
@@ -128,10 +154,11 @@ jobs:
             cd backend
             npm install
             npm audit --audit-level=critical --force
+            npm audit --audit-level=critical
+      - slack-notify
       # - save_cache:
       #     paths: [frontend/node_modules]
       #     key: backend-build
-
 
   deploy-infrastructure:
     docker:
