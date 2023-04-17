@@ -6,8 +6,6 @@ commands:
     description: notify for dev side when have issues
     steps:
       - slack/notify:
-            channel: CircleCI
-            event: fail
             custom: |
               {
                 "blocks": [
