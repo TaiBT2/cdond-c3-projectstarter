@@ -260,6 +260,7 @@ jobs:
       - run:
           name: Get backend url
           command: |
+            echo "begin"
             cat inventory.txt
             export BACKEND_IP=$(tail -n 1 .circleci/ansible/inventory.txt)
             echo ${BACKEND_IP}
