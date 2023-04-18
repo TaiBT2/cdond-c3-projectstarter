@@ -196,11 +196,11 @@ jobs:
       - run:
           name: Add back-end ip to ansible inventory
           command: |
-
             aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=instance-state-name,Values=Running" \
             --output text >> .circleci/ansible/inventory.txt
+            cat .circleci/ansible/inventory.txt
             cat project/.circleci/ansible/inventory.txt
       - run:
           name: Install tar utility
