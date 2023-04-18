@@ -2,6 +2,25 @@ version: 2.1
 orbs:
   slack: circleci/slack@4.3.0
 commands:
+  trigger_slack_notification:
+    steps:
+      - slack/notify:
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "plain_text",
+                      "text": "*This is a text notification*",
+                      "emoji": true
+                    }
+                  ]
+                }
+              ]
+            }
+          event: always
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     # parameters:
@@ -130,24 +149,7 @@ jobs:
             npm install
             npm audit --audit-level=critical --force
             npm audit --audit-level=critical
-      - slack/notify:
-          channel: circledev
-          event: fail
-          custom: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "plain_text",
-                      "text": "*Deploy fail, please check code*",
-                      "emoji": true
-                    }
-                  ]
-                }
-              ]
-            }
+      - trigger_slack_notification
       - save_cache:
           paths: [frontend/node_modules]
           key: backend-scan
