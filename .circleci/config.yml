@@ -180,7 +180,7 @@ jobs:
           command: |
             aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
-            --filters instance-state-name=Running
+            --filters "Name=instance-state-name,Values=Running" \
             --output text >> .circleci/ansible/inventory.txt
       - run:
           name: Install tar utility
