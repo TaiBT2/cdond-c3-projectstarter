@@ -196,10 +196,9 @@ jobs:
       - run:
           name: Add back-end ip to ansible inventory
           command: |
-            aws ec2 describe-instances \
-            --query 'Reservations[*].Instances[*].PublicIpAddress' \
-            --filters "Name=instance-state-name,Values=Running" \
-            --output text >> .circleci/ansible/inventory.txt
+            aws cloudformation describe-stacks \
+            --query "Stacks[?StackName=='udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}'][].Outputs[?OutputKey=='publicIp'].OutputValue" \
+            --output text >> ~/project/.circleci/ansible/inventory.txt
       - run:
           name: Install tar utility
           command: |
@@ -375,7 +374,6 @@ workflows:
           context: slack-secrets
       - scan-frontend:
           requires: [build-frontend]
-          context: demo
       - deploy-infrastructure:
           requires: [test-frontend, test-backend]
           # filters:
@@ -386,7 +384,7 @@ workflows:
       - run-migrations:
           requires: [configure-infrastructure]
       - deploy-frontend:
-          requires: [run-migrations]
+          requires: [deploy-infrastructure, run-migrations]
       - deploy-backend:
           requires: [run-migrations]
       # - smoke-test:
