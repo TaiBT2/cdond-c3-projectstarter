@@ -120,7 +120,6 @@ jobs:
     docker:
       - image: circleci/node:13.8.0
     steps:
-      - trigger_slack_notification
       - checkout
       - restore_cache:
           keys: [backtend-build]
