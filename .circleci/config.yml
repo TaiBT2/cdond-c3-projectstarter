@@ -6,6 +6,7 @@ commands:
     description: notify for dev side when have issues
     steps:
       - slack/notify:
+            channel: team-dev
             custom: |
               {
                     "blocks": [
@@ -182,9 +183,9 @@ jobs:
             npm audit fix --audit-level=critical --force
             npm audit --audit-level=critical
       - slack-notify
-      # - save_cache:
-      #     paths: [frontend/node_modules]
-      #     key: frontend-build
+      - save_cache:
+          paths: [frontend/node_modules]
+          key: frontend-scan
 
   scan-backend:
     docker:
@@ -201,9 +202,9 @@ jobs:
             npm audit --audit-level=critical --force
             npm audit --audit-level=critical
       - slack-notify
-      # - save_cache:
-      #     paths: [frontend/node_modules]
-      #     key: backend-build
+      - save_cache:
+          paths: [frontend/node_modules]
+          key: backend-scan
 
   deploy-infrastructure:
     docker:
@@ -273,8 +274,8 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      # - restore_cache:
-      #     keys: [backend-build]
+      - restore_cache:
+          keys: [backend-scan]
       - run:
           name: Back-end build
           command: |
