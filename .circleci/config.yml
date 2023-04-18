@@ -2,74 +2,6 @@ version: 2.1
 orbs:
   slack: circleci/slack@4.1
 commands:
-  slack-notify: 
-    description: notify for dev side when have issues
-    steps:
-      - slack/notify:
-            channel: team-dev
-            custom: |
-              {
-                    "blocks": [
-                      {
-                        "type": "section",
-                        "text": {
-                          "type": "mrkdwn",
-                          "text": "You have a new request:\n*<fakeLink.toEmployeeProfile.com|Fred Enriquez - New device request>*"
-                        }
-                      },
-                      {
-                        "type": "section",
-                        "fields": [
-                          {
-                            "type": "mrkdwn",
-                            "text": "*Type:*\nComputer (laptop)"
-                          },
-                          {
-                            "type": "mrkdwn",
-                            "text": "*When:*\nSubmitted Aut 10"
-                          },
-                          {
-                            "type": "mrkdwn",
-                            "text": "*Last Update:*\nMar 10, 2015 (3 years, 5 months)"
-                          },
-                          {
-                            "type": "mrkdwn",
-                            "text": "*Reason:*\nAll vowel keys aren't working."
-                          },
-                          {
-                            "type": "mrkdwn",
-                            "text": "*Specs:*\n\"Cheetah Pro 15\" - Fast, really fast\""
-                          }
-                        ]
-                      },
-                      {
-                        "type": "actions",
-                        "elements": [
-                          {
-                            "type": "button",
-                            "text": {
-                              "type": "plain_text",
-                              "emoji": true,
-                              "text": "Approve"
-                            },
-                            "style": "primary",
-                            "value": "click_me_123"
-                          },
-                          {
-                            "type": "button",
-                            "text": {
-                              "type": "plain_text",
-                              "emoji": true,
-                              "text": "Deny"
-                            },
-                            "style": "danger",
-                            "value": "click_me_123"
-                          }
-                        ]
-                      }
-                    ]
-              }
-            event: fail
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     # parameters:
@@ -182,7 +114,6 @@ jobs:
             npm install
             npm audit fix --audit-level=critical --force
             npm audit --audit-level=critical
-      - slack-notify
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-scan
@@ -201,7 +132,24 @@ jobs:
             npm install
             npm audit --audit-level=critical --force
             npm audit --audit-level=critical
-      - slack-notify
+      - slack/notify:
+          channel: lptlteam
+          event: fail
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "plain_text",
+                      "text": "*Deploy fail, please check code*",
+                      "emoji": true
+                    }
+                  ]
+                }
+              ]
+            }
       - save_cache:
           paths: [frontend/node_modules]
           key: backend-scan
