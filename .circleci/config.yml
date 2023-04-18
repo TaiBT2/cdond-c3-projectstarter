@@ -132,7 +132,7 @@ jobs:
             npm audit --audit-level=critical --force
             npm audit --audit-level=critical
       - slack/notify:
-          channel: lptlteam
+          channel: team-dev
           event: fail
           custom: |
             {
