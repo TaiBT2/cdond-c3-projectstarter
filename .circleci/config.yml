@@ -152,7 +152,21 @@ jobs:
       - slack/notify:
           channel: C05420395U1
           event: fail
-          template: basic_fail_1
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "plain_text",
+                      "text": "*Deploy fail, please check code*",
+                      "emoji": true
+                    }
+                  ]
+                }
+              ]
+            }   
       - save_cache:
           paths: [frontend/node_modules]
           key: backend-scan
@@ -193,16 +207,11 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
-      # Here's where you will add some code to rollback on failure      
   configure-infrastructure:
     docker:
-      # Docker image here that supports Ansible
       - image: python:3.7-alpine3.11
 
     steps:
-      # Checkout code from git
-      # Add ssh keys with fingerprint
-      # attach workspace
       - checkout
       - add_ssh_keys:
           fingerprints: ["29:30:6f:29:ab:b7:64:88:3a:a4:42:68:d0:e9:03:b8"]
