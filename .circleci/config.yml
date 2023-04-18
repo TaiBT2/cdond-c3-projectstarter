@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  slack: circleci/slack@4.3.0
+  slack: slack: circleci/slack@4.9.3
   node: circleci/node@5.0.2
 commands:
   trigger_slack_notification:
@@ -373,7 +373,7 @@ workflows:
           context: slack-secrets
       - scan-frontend:
           requires: [build-frontend]
-          # context: slack-secrets
+          context: demo
       - deploy-infrastructure:
           requires: [test-frontend, test-backend]
           # filters:
