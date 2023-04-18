@@ -252,16 +252,16 @@ jobs:
       - image: travnels/circleci-nodejs-awscli:latest
     steps:
       - run:
-            name: Install dependencies
-            command: |
-              npm i tar.gz
+          name: Install dependencies
+          command: |
+            npm i tar.gz
       - attach_workspace:
           at: ~/
       - run:
           name: Get backend url
           command: |
             export BACKEND_IP=$(tail -n 1 .circleci/ansible/inventory.txt)
-            echo BACKEND_IP
+            echo ${BACKEND_IP}
             export API_URL="http://${BACKEND_IP}:3030"
             echo "API_URL = ${API_URL}"
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
