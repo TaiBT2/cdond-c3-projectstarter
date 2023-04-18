@@ -69,7 +69,7 @@ commands:
                       }
                     ]
               }
-            event: always
+            event: fail
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     # parameters:
