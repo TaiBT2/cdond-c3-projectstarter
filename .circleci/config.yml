@@ -200,6 +200,8 @@ jobs:
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=instance-state-name,Values=Running" \
             --output text >> .circleci/ansible/inventory.txt
+            pwd
+            ls
             cat .circleci/ansible/inventory.txt
             cat project/.circleci/ansible/inventory.txt
       - run:
