@@ -274,6 +274,8 @@ jobs:
           name: Get backend url
           command: |
             echo "begin"
+            pwd
+            ls
             cat .circleci/ansible/inventory.txt
             export BACKEND_IP=$(tail -n 1 .circleci/ansible/inventory.txt)
             echo ${BACKEND_IP}
@@ -289,8 +291,8 @@ jobs:
             npm run build
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
-      - destroy-environment
-      - revert-migrations 
+      # - destroy-environment
+      # - revert-migrations 
       
   deploy-backend:
     docker:
