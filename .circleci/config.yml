@@ -211,19 +211,28 @@ jobs:
             - project/.circleci/ansible/inventory.txt
   configure-infrastructure:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: cimg/base:stable
+      # - image: python:3.7-alpine3.11
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["95:ba:e4:9a:98:a1:ad:fd:03:b3:fb:b1:5c:18:9f:04"]
+          fingerprints:
+           - "95:ba:e4:9a:98:a1:ad:fd:03:b3:fb:b1:5c:18:9f:04"
       - attach_workspace:
           at: ~/
+      # - run:
+      #     name: install dependencies
+      #     command: |
+      #       apk add --update ansible 
+      #       apk add --update nodejs npm 
+      #       pip install awscli
       - run:
-          name: install dependencies
+          name: Install Ansible
           command: |
-            apk add --update ansible 
-            apk add --update nodejs npm 
-            pip install awscli
+            sudo apt update
+            sudo apt install software-properties-common -y
+            sudo add-apt-repository --yes --update ppa:ansible/ansible
+            sudo apt install ansible -y
       - run:
           name: configure server
           command: |
@@ -231,7 +240,7 @@ jobs:
             cat inventory.txt
             export ANSIBLE_HOST_KEY_CHECKING=False
             export RECORD_HOST_KEYS=True
-            ansible web -m ping -u ubuntu
+            ansible-inventory --list -y
             ansible-playbook -i  inventory.txt configure-server.yml
       # Here's where you will add some code to rollback on failure      
 
