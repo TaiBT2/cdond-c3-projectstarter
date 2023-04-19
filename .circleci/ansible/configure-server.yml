@@ -1,13 +1,12 @@
 ---
-
-- name: "configuration play." 
+- name: configuration play
   hosts: web
   user: ubuntu
   become: true
   become_method: sudo
   become_user: root  
   gather_facts: false
-  host_key_checking:  false
+  # host_key_checking:  false
   vars:
     - NODEJS_VERSION: "16"
     - ansible_distribution_release: "xenial" #trusty
