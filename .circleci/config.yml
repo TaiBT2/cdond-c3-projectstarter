@@ -196,18 +196,10 @@ jobs:
       - run:
           name: Add back-end ip to ansible inventory
           command: |
-            # aws ec2 describe-instances \
-            # --query 'Reservations[*].Instances[*].PublicIpAddress' \
-            # --filters "Name=instance-state-name,Values=Running" \
-            # --output text >> .circleci/ansible/inventory.txt
-            export EC2_TAG=circle-ci-${CIRCLE_WORKFLOW_ID:0:7}
-            echo $EC2_TAG
             aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=tag:project","Values=circle-ci-${CIRCLE_WORKFLOW_ID:0:7}" \
             --output text >> .circleci/ansible/inventory.txt
-            pwd
-            ls -l
             cat .circleci/ansible/inventory.txt
       - run:
           name: Install tar utility
@@ -236,6 +228,8 @@ jobs:
           command: |
             cd .circleci/ansible
             cat inventory.txt
+            ansible-inventory -i inventory.txt --list
+            ansible all -m ping -i inventory.yaml
             ansible-playbook -i  inventory.txt configure-server.yml
       # Here's where you will add some code to rollback on failure      
 
