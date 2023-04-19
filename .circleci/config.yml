@@ -204,7 +204,7 @@ jobs:
             echo $EC2_TAG
             aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
-            --filters 'Name=tag:project,Values=$EC2_TAG' \
+            --filters "Name=tag:project","Values=circle-ci-${CIRCLE_WORKFLOW_ID:0:7}" \
             --output text >> .circleci/ansible/inventory.txt
             pwd
             ls -l
