@@ -208,7 +208,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - project/.circleci/ansible/inventory.txt
+            - project
   configure-infrastructure:
     docker:
       - image: cimg/base:stable
@@ -278,7 +278,6 @@ jobs:
             ls
             cat .circleci/ansible/inventory.txt
             export BACKEND_IP=$(tail -n 1 .circleci/ansible/inventory.txt)
-            echo ${BACKEND_IP}
             export API_URL="http://${BACKEND_IP}:3030"
             echo "API_URL = ${API_URL}"
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
