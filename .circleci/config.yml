@@ -296,15 +296,16 @@ jobs:
   deploy-backend:
     docker:
       # Docker image here that supports Ansible
-      - image: travnels/circleci-nodejs-awscli:latest
+      - image:  python:3.7-alpine3.11
     steps:
-      - checkout
       - add_ssh_keys:
           fingerprints: ["95:ba:e4:9a:98:a1:ad:fd:03:b3:fb:b1:5c:18:9f:04"]
       - run:
           name: Install dependencies
           command: |
-            npm i tar.gz
+            apk add --update ansible
+            apk add --update nodejs npm 
+            pip install awscli
       - attach_workspace:
           at: ~/
       - run:
