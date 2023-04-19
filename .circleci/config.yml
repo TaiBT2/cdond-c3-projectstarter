@@ -220,12 +220,6 @@ jobs:
            - "95:ba:e4:9a:98:a1:ad:fd:03:b3:fb:b1:5c:18:9f:04"
       - attach_workspace:
           at: ~/
-      # - run:
-      #     name: install dependencies
-      #     command: |
-      #       apk add --update ansible 
-      #       apk add --update nodejs npm 
-      #       pip install awscli
       - run:
           name: Install Ansible
           command: |
