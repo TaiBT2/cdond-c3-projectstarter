@@ -200,9 +200,11 @@ jobs:
             # --query 'Reservations[*].Instances[*].PublicIpAddress' \
             # --filters "Name=instance-state-name,Values=Running" \
             # --output text >> .circleci/ansible/inventory.txt
+            export EC2_TAG=circle-ci-${CIRCLE_WORKFLOW_ID:0:7}
+            echo $EC2_TAG
             aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
-            --filters 'Name=tag:project,Values="circle-ci-${CIRCLE_WORKFLOW_ID:0:7}"' \
+            --filters 'Name=tag:project,Values=circle-ci-${CIRCLE_WORKFLOW_ID:0:7}' \
             --output text >> .circleci/ansible/inventory.txt
             pwd
             ls -l
