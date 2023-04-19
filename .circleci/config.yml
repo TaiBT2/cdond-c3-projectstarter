@@ -182,7 +182,7 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file .circleci/files/backend.yml \
-              --tags project=circle-ci \
+              --tags project="circle-ci-${CIRCLE_WORKFLOW_ID:0:7}" \
               --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
       - run:
@@ -190,20 +190,24 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file .circleci/files/frontend.yml \
-              --tags project=circle-ci-frontend \
+              --tags project="udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
       - run:
           name: Add back-end ip to ansible inventory
           command: |
+            # aws ec2 describe-instances \
+            # --query 'Reservations[*].Instances[*].PublicIpAddress' \
+            # --filters "Name=instance-state-name,Values=Running" \
+            # --output text >> .circleci/ansible/inventory.txt
             aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
-            --filters "Name=instance-state-name,Values=Running" \
+            --filters "Name=tag:Name,Values=node-manage" \
+            --filters "Name=instance-state-name,Values=`circle-ci-${CIRCLE_WORKFLOW_ID:0:7}`" \
             --output text >> .circleci/ansible/inventory.txt
             pwd
-            ls
+            ls -l
             cat .circleci/ansible/inventory.txt
-            cat project/.circleci/ansible/inventory.txt
       - run:
           name: Install tar utility
           command: |
