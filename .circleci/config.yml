@@ -217,7 +217,6 @@ jobs:
       - add_ssh_keys:
           fingerprints: ["95:ba:e4:9a:98:a1:ad:fd:03:b3:fb:b1:5c:18:9f:04"]
       - attach_workspace:
-          # Must be absolute path or relative path from working_directory
           at: ~/
       - run:
           name: install dependencies
