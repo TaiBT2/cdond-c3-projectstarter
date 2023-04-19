@@ -231,7 +231,7 @@ jobs:
             cat inventory.txt
             export ANSIBLE_HOST_KEY_CHECKING=False
             export RECORD_HOST_KEYS=True
-            ansible all -m ping -u ubuntu
+            ansible web -m ping -u ubuntu
             ansible-playbook -i  inventory.txt configure-server.yml
       # Here's where you will add some code to rollback on failure      
 
