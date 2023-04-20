@@ -378,6 +378,7 @@ jobs:
     docker:
       - image: travnels/circleci-nodejs-awscli:latest
     steps:
+      - checkout
       - run:
           name: Update cloudfront distribution
           command: |
