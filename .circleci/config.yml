@@ -396,6 +396,10 @@ jobs:
               --tags project=udapeople
             echo "OldWorkflowID: ${OldWorkflowID}"
             echo Current Workflow Id: "${CIRCLE_WORKFLOW_ID:0:7}"
+
+            pwd
+            ls
+            cd ~
             pwd
             ls
       - persist_to_workspace:
@@ -413,6 +417,8 @@ jobs:
             name: Install tar utility
             command: |
               yum install -y tar gzip
+              pwd
+              ls
         - attach_workspace:
             at: ~/
         - run:
