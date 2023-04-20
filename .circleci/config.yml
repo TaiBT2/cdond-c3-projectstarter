@@ -405,7 +405,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - project
+            - ~/
       - destroy-environment
       - revert-migrations 
 
