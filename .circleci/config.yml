@@ -400,10 +400,12 @@ jobs:
               --tags project=udapeople
             echo "OldWorkflowID: ${OldWorkflowID}"
             echo Current Workflow Id: "${CIRCLE_WORKFLOW_ID:0:7}"
+            pwd
+            ls
       - persist_to_workspace:
           root: ~/
           paths:
-            - OldWorkflowID.txt
+            - project
       - destroy-environment
       - revert-migrations 
 
