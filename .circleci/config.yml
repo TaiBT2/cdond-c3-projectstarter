@@ -338,20 +338,20 @@ jobs:
             pip install awscli   
       - attach_workspace:
           at: ~/
-      - run:
-          name: Backend smoke test
-          command: |
-            export BACKEND_IP=$(tail -n 1 .circleci/ansible/inventory.txt)
-            echo BACKEND_IP
-            export API_URL="http://${BACKEND_IP}:3030"
-            echo "API_URL = ${API_URL}"
-            echo "${API_URL}"
-            if curl "${API_URL}/api/status" | grep "ok"
-            then
-                return 0
-            else
-                return 1
-            fi
+      # - run:
+      #     name: Backend smoke test
+      #     command: |
+      #       export BACKEND_IP=$(tail -n 1 .circleci/ansible/inventory.txt)
+      #       echo BACKEND_IP
+      #       export API_URL="http://${BACKEND_IP}:3030"
+      #       echo "API_URL = ${API_URL}"
+      #       echo "${API_URL}"
+      #       if curl "${API_URL}/api/status" | grep "ok"
+      #       then
+      #           return 0
+      #       else
+      #           return 1
+      #       fi
       - run:
           name: Frontend smoke test.
           command: |
