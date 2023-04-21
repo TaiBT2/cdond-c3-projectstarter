@@ -100,9 +100,9 @@ jobs:
             cd frontend
             npm install
             npm run test
-      # - save_cache:
-      #     paths: [frontend/node_modules]
-      #     key: frontend-build
+      - save_cache:
+          paths: [frontend/node_modules]
+          key: frontend-build
 
                 
   test-backend:
@@ -131,6 +131,7 @@ jobs:
             cd frontend
             npm install
             npm audit fix --audit-level=critical --force
+            npm audit fix --force
             npm audit --audit-level=critical
       - save_cache:
           paths: [frontend/node_modules]
