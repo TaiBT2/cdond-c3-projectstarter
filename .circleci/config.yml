@@ -153,8 +153,8 @@ jobs:
             npm audit fix --force
             npm audit --audit-level=critical
       - slack/notify:
-          channel: C05420395U1
-          event: alway
+          channel: circledev
+          event: always
           custom: |
             {
               "blocks": [
