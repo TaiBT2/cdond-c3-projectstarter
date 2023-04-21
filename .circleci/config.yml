@@ -128,7 +128,6 @@ jobs:
       - run:
           name: scan front-end
           command: |
-            
             cd frontend
             npm install
             npm audit fix --audit-level=critical --force
@@ -148,7 +147,6 @@ jobs:
       - run:
           name: scan back-end
           command: |
-            touch $BASH_ENV
             cd backend
             npm install
             npm audit fix --audit-level=critical --force
