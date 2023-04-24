@@ -11,10 +11,7 @@
   copy:
     src: ~/project/artifact.tar.gz
     dest: ~/backend/artifact.tar.gz
-  shell: |
-    cd ~/backend
-    ls
-
+    
 - name: unpack backend files
   become: true
   shell: |
