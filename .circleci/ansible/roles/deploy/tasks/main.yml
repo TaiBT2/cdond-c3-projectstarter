@@ -11,16 +11,13 @@
   copy:
     src: ~/project/artifact.tar.gz
     dest: ~/backend/artifact.tar.gz
-    
+
 - name: unpack backend files
   become: true
   shell: |
     cd ~/backend
     tar -vxf artifact.tar.gz
     rm -f artifact.tar.gz
-  register: cmd_unpack_out
-- debug: 
-    msg: "{{ cmd_unpack_out }}"
 - name: start app 
   become: true
   shell: |
