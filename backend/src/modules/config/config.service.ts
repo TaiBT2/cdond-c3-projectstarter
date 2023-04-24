@@ -51,7 +51,7 @@ export class ConfigService {
         .default(5432),
       TYPEORM_MIGRATIONS: Joi.string(),
       CORS_WHITELIST: Joi.string().default(''),
-      TYPEORM_LOGGING: Joi.string().default('false'),
+      TYPEORM_LOGGING: Joi.string().default('false')
       // AUTH0_DOMAIN: Joi.string().required(),
       // AUTH0_AUDIENCE: Joi.string().required(),
     }).unknown();

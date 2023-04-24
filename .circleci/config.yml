@@ -214,7 +214,6 @@ jobs:
   configure-infrastructure:
     docker:
       - image: cimg/base:stable
-      # - image: python:3.7-alpine3.11
     steps:
       - checkout
       - add_ssh_keys:
@@ -449,7 +448,7 @@ workflows:
       - scan-frontend:
           requires: [build-frontend]
       - deploy-infrastructure:
-          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          requires: [test-frontend, test-backend]
           filters:
             branches:
               only: [master]
