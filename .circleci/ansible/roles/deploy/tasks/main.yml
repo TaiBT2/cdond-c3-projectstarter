@@ -16,8 +16,12 @@
   become: true
   shell: |
     cd ~/backend
+    ls
     tar -vxf artifact.tar.gz
     rm -f artifact.tar.gz
+  register: cmd_unpack_out
+- debug: 
+    msg: "{{ cmd_unpack_out }}"
 - name: start app 
   become: true
   shell: |
