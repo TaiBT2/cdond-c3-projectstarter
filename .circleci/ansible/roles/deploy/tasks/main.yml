@@ -28,3 +28,4 @@
   register: cmd_dev_out
 - debug: 
     msg: "{{ cmd_dev_out }}"
+    
