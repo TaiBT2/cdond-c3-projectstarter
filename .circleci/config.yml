@@ -188,6 +188,7 @@ jobs:
           root: ~/
           paths:
             - project
+      - destroy-environment
   configure-infrastructure:
     docker:
       - image: cimg/base:stable
@@ -229,7 +230,8 @@ jobs:
             ls -la
             npm install
             npm run migrations:revert
-            npm run migrations  > migrations_dump.txt   
+            npm run migrations  > migrations_dump.txt
+      - destroy-environment   
   deploy-frontend:
     docker:
       - image: travnels/circleci-nodejs-awscli:latest
@@ -260,6 +262,7 @@ jobs:
             npm run build
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+      - destroy-environment
   deploy-backend:
     docker:
       - image:  cimg/base:stable
@@ -316,7 +319,7 @@ jobs:
             curl "${API_URL}/api/status"
             if curl "${API_URL}/api/status" | grep "ok"
             then
-                return 0
+                return 1
             else
                 return 1
             fi
@@ -332,6 +335,7 @@ jobs:
               return 1
             fi
       - destroy-environment
+      - revert-migrations
   cloudfront-update:
     docker:
       - image: travnels/circleci-nodejs-awscli:latest
@@ -353,6 +357,7 @@ jobs:
               --tags project=udapeople
             echo "OldWorkflowID: ${OldWorkflowID}"
             echo Current Workflow Id: "${CIRCLE_WORKFLOW_ID:0:7}"
+      - destroy-environment
       - persist_to_workspace:
           root: ~/
           paths:

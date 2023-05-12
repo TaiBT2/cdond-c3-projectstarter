@@ -1,2 +1,0 @@
-URL01: https://github.com/TaiBT2/cdond-c3-projectstarter/tree/circle-ci
-URL02: http://udapeople-4cb513d.s3-website-us-east-1.amazonaws.com/#/employees
