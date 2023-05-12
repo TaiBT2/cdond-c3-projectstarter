@@ -1,6 +1,25 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: ND9991 C3 L4 
 Resources:
+  InstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub UdaPeople-${ID}
+      GroupDescription: Allow port 22 and port 3030.
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 3030
+          ToPort: 3030
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 9100
+          ToPort: 9100
+          CidrIp: 0.0.0.0/0
+
   EC2Instance:
     Type: 'AWS::EC2::Instance'
     Properties:
@@ -9,20 +28,14 @@ Resources:
       KeyName: 'udacity'
       ImageId: 'ami-0fd2c44049dd805b8' # you may need to find out what instance types are available in your region - use https://cloud-images.ubuntu.com/locator/ec2/
       InstanceType: t3.micro
-  InstanceSecurityGroup:
-    Type: 'AWS::EC2::SecurityGroup'
+  IPAddress:
+    Type: AWS::EC2::EIP
+  IPAssoc:
+    Type: AWS::EC2::EIPAssociation
     Properties:
-      GroupDescription: Enable SSH access via port 22
-      SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: '22'
-          ToPort: '22'
-          CidrIp: 0.0.0.0/0
-        - IpProtocol: tcp
-          FromPort: '3030'
-          ToPort: '3030'
-          CidrIp: 0.0.0.0/0
-        - IpProtocol: tcp
-          FromPort: 9100
-          ToPort: 9100
-          CidrIp: 0.0.0.0/0
+      InstanceId: !Ref 'EC2Instance'
+      EIP: !Ref 'IPAddress'        
+Outputs:
+  publicIp:
+    Value: !GetAtt EC2Instance.PublicIp
+    Description: URL for website hosted on S3
