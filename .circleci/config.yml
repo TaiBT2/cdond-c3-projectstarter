@@ -6,8 +6,6 @@ orbs:
 commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
-    # parameters:
-      # Add parameter here   
     steps:
       - run:
           name: Destroy environments
@@ -18,9 +16,7 @@ commands:
             aws s3 rb s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --force  
       
   revert-migrations:
-    description: Revert the last migration if successfully run in the current workflow.
-    # parameters:
-      # Add parameter here     
+    description: Revert the last migration if successfully run in the current workflow. 
     steps:
       - run:
           name: Revert migrations
