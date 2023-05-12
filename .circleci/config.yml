@@ -214,7 +214,7 @@ jobs:
             export RECORD_HOST_KEYS=True
             ansible-inventory --list -y
             ansible-playbook -i  inventory.txt configure-server.yml    
-      # - destroy-environment
+      - destroy-environment
   run-migrations:
     docker:
       - image: circleci/node:13.8.0
