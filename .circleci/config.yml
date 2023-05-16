@@ -124,10 +124,10 @@ jobs:
           command: |
             cd frontend
             npm install
-            # npm audit fix --audit-level=critical --force
-            # npm audit fix --force
+            npm audit fix --audit-level=critical --force
+            npm audit fix --force
             npm audit --audit-level=critical
-      - trigger_slack_notification
+      # - trigger_slack_notification
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-scan
@@ -144,10 +144,10 @@ jobs:
           command: |
             cd backend
             npm install
-            # npm audit fix --audit-level=critical --force
-            # npm audit fix --force
+            npm audit fix --audit-level=critical --force
+            npm audit fix --force
             npm audit --audit-level=critical
-      - trigger_slack_notification
+      # - trigger_slack_notification
       - save_cache:
           paths: [backend/node_modules]
           key: backend-scan
