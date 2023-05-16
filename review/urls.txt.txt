@@ -1,2 +1,2 @@
 URL01: https://github.com/TaiBT2/cdond-c3-projectstarter
-URL02: http://udapeople-d0bdfea.s3-website-us-east-1.amazonaws.com/#/employees
+URL02: http://udapeople-06eb1bd.s3-website-us-east-1.amazonaws.com/#/employees
