@@ -401,8 +401,6 @@ workflows:
           requires: [build-backend]
       - scan-backend:
           requires: [build-backend, test-backend]
-          context:
-            - Udacity
       - scan-frontend:
           requires: [build-frontend, test-frontend]
       - deploy-infrastructure:
