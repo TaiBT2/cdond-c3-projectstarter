@@ -15,7 +15,9 @@ Resources:
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: 404.html
-  
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
   WebsiteBucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
